@@ -1,8 +1,20 @@
-import {game} from "sgc/sgc.js";
-import {Sprite} from "sgc/sgc.js";
+import {game} from "./sgc/sgc.js";
+import {Sprite} from "./sgc/sgc.js";
 
 game.setBackground("floor.png");
 
-let PlayerWizard = new Sprite();
+class PlayerWizard extends Sprite {
+    constructor () {
+        super();
+        this.name = "Marcus the Wizard";
+        this.setImage("marcusSheet.png");
+        this.width = 48;
+        this.height = 48;
+        this.x = this.width;
+        this.y = this.y;
+    }
+}
+
+let marcus = new PlayerWizard;
 
 
