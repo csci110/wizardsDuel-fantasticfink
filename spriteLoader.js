@@ -8,4 +8,4 @@ game.preloadImage("stranger.png", 48, 48);
 game.preloadImage("ann.png", 48, 48);
 game.preloadImage("rfsprite.png");
 game.preloadImage("rfbackground.jpg");
-
+game.preloadImage("marcusSheet.png");
