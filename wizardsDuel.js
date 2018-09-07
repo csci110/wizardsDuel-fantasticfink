@@ -1,3 +1,4 @@
+// Includes game and Sprite modules from the file ./sgc/sgc.js
 import {game} from "./sgc/sgc.js";
 import {Sprite} from "./sgc/sgc.js";
 
@@ -16,8 +17,8 @@ class PlayerWizard extends Sprite {
         this.y = this.height;
         this.defineAnimation("down", 6, 8);
         this.defineAnimation("up", 0, 2);
-        this.speedWhenWalking = 100;
         this.defineAnimation("right", 3, 5);
+        this.speedWhenWalking = 100;
     }
     
     // Move Down   
@@ -45,7 +46,7 @@ class PlayerWizard extends Sprite {
     handleSpacebar() {
         let spell = new Spell();
         // This sets the position of the spell object equal to the position
-        // of any object created from teh PlayerWizard class
+        // of any object created from the PlayerWizard class
         spell.x = this.width;
         spell.y = this.y;
         spell.name = "A spell cast by Marcus";
@@ -55,6 +56,7 @@ class PlayerWizard extends Sprite {
     }
 }
 
+// Creates Spell class
 class Spell extends Sprite {
     constructor() {
         super();
@@ -65,13 +67,58 @@ class Spell extends Sprite {
         this.playAnimation("magic", true);
     }
     
+    // Removes spell after it is fired
     handleBoundaryContact() {
-        // Delete spell when it leaves the display area
         game.removeSprite(this);
         
     }
 }
 
+// Creates NonPlayerWizard class
+class NonPlayerWizard extends Sprite {
+    constructor() {
+        super();
+        this.name = "The Mysterious Stranger";
+        this.setImage("strangerSheet.png");
+        this.width = 48;
+        this.height = 48;
+        this.x = game.displayWidth - 2 * this.width;
+        this.y = this.height;
+        this.angle = 270;
+        this.speed = 150;
+        this.defineAnimation("down", 6, 8);
+        this.defineAnimation("up", 0, 2);
+        this.defineAnimation("left", 9, 11);
+        this.playAnimation ("down");
+    
+    if (this.y <= 0) {
+        this.y = 0;
+        this.angle = 270;
+        this.playAnimation("down");
+        }
+    
+    if (this.y >= game.displayHeight - this.height) {
+        this.y = game.displayHeight - this.height;
+        this.angle = 90;
+        this.playAnimation("up");
+        }
+        
+    if (this.angle === 90) {
+        this.playAnimation("up");
+        }
+        
+    if (this.angle === 270) {
+    this.playAnimation("down");
+        }
+        
+    }    
+    
+    }    
+    
+// Creates the Stranger
+let stranger = new NonPlayerWizard();
+
+// Creates Marcus
 let marcus = new PlayerWizard;
 
 
