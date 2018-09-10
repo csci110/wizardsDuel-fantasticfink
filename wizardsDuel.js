@@ -37,7 +37,7 @@ class PlayerWizard extends Sprite {
     
     // Keep Marcus in the display area
     handleGameLoop() {
-        this.y = Math.max(0, this.y);
+        this.y = Math.max(5, this.y);
         this.y = Math.min(552, this.y);
         this.speed = 0;
     }
@@ -72,6 +72,16 @@ class Spell extends Sprite {
         game.removeSprite(this);
         
     }
+    
+    // Removes spell sprite
+    handleCollision(otherSprite) {
+        // Compares images so Stranger's spells don't destroy each other
+        if (this.getImage() !== otherSprite.getImage()) {
+        game.removeSprite(this);
+        new Fireball(otherSprite);
+        return false;
+    }
+    }
 }
 
 // Creates NonPlayerWizard class
@@ -89,31 +99,47 @@ class NonPlayerWizard extends Sprite {
         this.defineAnimation("down", 6, 8);
         this.defineAnimation("up", 0, 2);
         this.defineAnimation("left", 9, 11);
-        this.playAnimation ("down");
+    }
     
-    if (this.y <= 0) {
-        this.y = 0;
-        this.angle = 270;
+    handleGameLoop() {
+        
+        if (this.y <= 0) {
+            this.y = 0;
+            this.angle = 270;
+            this.playAnimation("down");
+            }
+    
+        if (this.y >= game.displayHeight - this.height) {
+            this.y = game.displayHeight - this.height;
+            this.angle = 90;
+            this.playAnimation("up");
+            }
+        
+        if (this.angle === 90) {
+            this.playAnimation("up");
+            }
+        
+        if (this.angle === 270) {
         this.playAnimation("down");
-        }
+            }
+            
+    }  
     
-    if (this.y >= game.displayHeight - this.height) {
-        this.y = game.displayHeight - this.height;
-        this.angle = 90;
-        this.playAnimation("up");
-        }
+}
+
+class Fireball extends Sprite {
+    constructor(deadSprite) {
+        super();
+        this.x = deadSprite.x;
+        this.y = deadSprite.y;
+        this.setImage("fireballSheet.png");
+        this.name = "A Ball of Fire";
+        this.defineAnimation("explode", 0, 16);
+        this.playAnimation("explode");
         
-    if (this.angle === 90) {
-        this.playAnimation("up");
-        }
-        
-    if (this.angle === 270) {
-    this.playAnimation("down");
-        }
-        
-    }    
+    }
+}
     
-    }    
     
 // Creates the Stranger
 let stranger = new NonPlayerWizard();
