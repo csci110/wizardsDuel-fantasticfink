@@ -47,7 +47,7 @@ class PlayerWizard extends Sprite {
         let spell = new Spell();
         // This sets the position of the spell object equal to the position
         // of any object created from the PlayerWizard class
-        spell.x = this.width;
+        spell.x = this.x + this.width;
         spell.y = this.y;
         spell.name = "A spell cast by Marcus";
         spell.setImage("marcusSpellSheet.png");
@@ -75,12 +75,15 @@ class Spell extends Sprite {
     
     // Removes spell sprite
     handleCollision(otherSprite) {
-        // Compares images so Stranger's spells don't destroy each other
         if (this.getImage() !== otherSprite.getImage()) {
-        game.removeSprite(this);
-        new Fireball(otherSprite);
-        return false;
-    }
+        // Adjust mostly blank spell image to vertical center.
+        let verticalOffset = Math.abs(this.y - otherSprite.y);
+        if (verticalOffset < this.height / 2) {
+            game.removeSprite(this);
+            new Fireball(otherSprite);
+      }
+  }
+  return false;
     }
 }
 
@@ -99,6 +102,7 @@ class NonPlayerWizard extends Sprite {
         this.defineAnimation("down", 6, 8);
         this.defineAnimation("up", 0, 2);
         this.defineAnimation("left", 9, 11);
+        this.defineAnimation("right", 3, 5);
     }
     
     handleGameLoop() {
@@ -123,10 +127,25 @@ class NonPlayerWizard extends Sprite {
         this.playAnimation("down");
             }
             
-    }  
+        let spell = new Spell();
+        // This sets the position of the spell object equal to the position
+        // of any object created from the PlayerWizard class
+        spell.x = this.x - this.width;
+        spell.y = this.y;
+        spell.name = "A spell cast by the Dark Wizard";
+        spell.setImage("strangerSpellSheet.png");
+        spell.angle = 180;
+        this.playAnimation("left");
+        
+        if ()
+        
+        
+    }
+    
     
 }
 
+// Creates/ends fireball
 class Fireball extends Sprite {
     constructor(deadSprite) {
         super();
@@ -134,16 +153,25 @@ class Fireball extends Sprite {
         this.y = deadSprite.y;
         this.setImage("fireballSheet.png");
         this.name = "A Ball of Fire";
+        game.removeSprite(deadSprite);
         this.defineAnimation("explode", 0, 16);
         this.playAnimation("explode");
         
+    }
+    
+    handleAnimationEnd() {
+        game.removeSprite(this);
+        if (!game.isActiveSprite(stranger)) {
+            game.end("Congratulations!\n\nMarcus has defeated The Mysterious"
+            + "\nStranger in the Dark Cloak!");
+        }
     }
 }
     
     
 // Creates the Stranger
 let stranger = new NonPlayerWizard();
-
+    
 // Creates Marcus
 let marcus = new PlayerWizard;
 
