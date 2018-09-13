@@ -19,6 +19,7 @@ class PlayerWizard extends Sprite {
         this.defineAnimation("up", 0, 2);
         this.defineAnimation("right", 3, 5);
         this.speedWhenWalking = 100;
+        this.spellCastTime = 0;
     }
     
     // Move Down   
@@ -44,15 +45,19 @@ class PlayerWizard extends Sprite {
     
     // Press Space Bar to shoot spell
     handleSpacebar() {
-        let spell = new Spell();
-        // This sets the position of the spell object equal to the position
-        // of any object created from the PlayerWizard class
-        spell.x = this.x + this.width;
-        spell.y = this.y;
-        spell.name = "A spell cast by Marcus";
-        spell.setImage("marcusSpellSheet.png");
-        spell.angle = 0;
-        this.playAnimation("right");
+        let now = game.getTime();  // get the number of seconds since game start
+        if (now - this.spellCastTime >= 2) {
+            this.spellCastTime = now;
+            let spell = new Spell();
+            // This sets the position of the spell object equal to the position
+            // of any object created from the PlayerWizard class
+            spell.x = this.x + this.width;
+            spell.y = this.y;
+            spell.name = "A spell cast by Marcus";
+            spell.setImage("marcusSpellSheet.png");
+            spell.angle = 0;
+            this.playAnimation("right");
+            }
     }
 }
 
@@ -127,6 +132,7 @@ class NonPlayerWizard extends Sprite {
             this.playAnimation("down");
             }
             
+        if (Math.random() < 0.03) {
         let spell = new Spell();
         // This sets the position of the spell object equal to the position
         // of any object created from the PlayerWizard class
@@ -136,20 +142,8 @@ class NonPlayerWizard extends Sprite {
         spell.setImage("strangerSpellSheet.png");
         spell.angle = 180;
         this.playAnimation("left");
-        
-        if (Math.random()){
-            let spell = new Spell();
-            this.x = this.x - this.width;
-            this.y = this.y;
-            this.angle = 180;
-            this.name = "Dark Wizard's Spell";
-            this.setImage("strangerSpellSheet.png"); 
-            this.playAnimation("right");
-            }
-        
-        
+        }
     }
-    
     
 }
 
@@ -173,8 +167,9 @@ class Fireball extends Sprite {
             game.end("Congratulations!\n\nMarcus has defeated The Mysterious"
             + "\nStranger in the Dark Cloak!");}
         if (!game.isActiveSprite(marcus)) {
-            game.end("Congratulations!\n\nMarcus is defeated by The Mysterious"
-            + "\nStranger in the dark cloak!  Better luck next time, loser!");
+            game.end("You Suck!\n\nMarcus is defeated by The Mysterious"
+            + "\nStranger in The Dark Cloak."
+            +  "\nBetter luck next time, loser!");
         }
     }
 }
