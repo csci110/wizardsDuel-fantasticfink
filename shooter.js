@@ -13,33 +13,36 @@ class PlayerWizard extends Sprite {
         this.setImage("marcusSheet.png");
         this.width = 48;
         this.height = 48;
-        this.x = this.width;
-        this.y = this.height;
+        this.x = this.height;
+        this.y = this.width;
         this.defineAnimation("down", 6, 8);
         this.defineAnimation("up", 0, 2);
         this.defineAnimation("right", 3, 5);
+        this.defineAnimation("left", 9, 11);
         this.speedWhenWalking = 100;
         this.spellCastTime = 0;
     }
     
-    // Move Down   
-    handleDownArrowKey() {
-        this.playAnimation("down");
+    // Move Left  
+    handleLeftArrowKey() {
+        this.playAnimation("left");
         this.speed = this.speedWhenWalking;
-        this.angle = 270;
+        this.angle = 180;
     }
 
-    // Move up
-    handleUpArrowKey() {
-        this.playAnimation("up");
+    // Move Right
+    handleRightArrowKey() {
+        this.playAnimation("right");
         this.speed = this.speedWhenWalking;
-        this.angle = 90;
+        this.angle = 0;
     }
     
     // Keep Marcus in the display area
     handleGameLoop() {
-        this.y = Math.max(5, this.y);
-        this.y = Math.min(552, this.y);
+        this.x = Math.max(0, this.x);
+        this.x = Math.min(750, this.x);
+        this.y = 0;
+        this.y = 550;
         this.speed = 0;
     }
     
@@ -55,8 +58,8 @@ class PlayerWizard extends Sprite {
             spell.y = this.y;
             spell.name = "A spell cast by Marcus";
             spell.setImage("marcusSpellSheet.png");
-            spell.angle = 0;
-            this.playAnimation("right");
+            spell.angle = 90;
+            this.playAnimation("up");
             }
     }
 }
@@ -100,8 +103,8 @@ class NonPlayerWizard extends Sprite {
         this.setImage("strangerSheet.png");
         this.width = 48;
         this.height = 48;
-        this.x = game.displayWidth - 2 * this.width;
-        this.y = this.height;
+        this.x = this.height;
+        this.y = game.displayWidth - 2 * this.width;
         this.angle = 270;
         this.speed = 150;
         this.defineAnimation("down", 6, 8);
