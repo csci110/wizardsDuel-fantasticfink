@@ -54,8 +54,11 @@ class PlayerWizard extends Sprite {
             let spell = new Spell();
             // This sets the position of the spell object equal to the position
             // of any object created from the PlayerWizard class
-            spell.x = this.x + this.width;
-            spell.y = this.y;
+            spell.x = this.x;
+            // The spell starts at the y coordinate the same as Marcus's 
+            // position MINUS his height, allowing the spell to start just 
+            // above him while avoiding collision detection.
+            spell.y = this.y - this.height;
             spell.name = "A spell cast by Marcus";
             spell.setImage("marcusSpellSheet.png");
             spell.angle = 90;
@@ -103,10 +106,11 @@ class NonPlayerWizard extends Sprite {
         this.setImage("strangerSheet.png");
         this.width = 48;
         this.height = 48;
-        this.x = this.height;
-        this.y = game.displayWidth - 2 * this.width;
-        this.angle = 270;
-        this.speed = 150;
+        this.x = game.displayWidth - 2 * this.width;
+        this.y = this.height;
+        this.angle = 0;
+        // Speed up the Dark Wizard
+        this.speed = 75;
         this.defineAnimation("down", 6, 8);
         this.defineAnimation("up", 0, 2);
         this.defineAnimation("left", 9, 11);
@@ -115,15 +119,15 @@ class NonPlayerWizard extends Sprite {
     
     handleGameLoop() {
         
-        if (this.y <= 0) {
-            this.y = 0;
-            this.angle = 270;
+        if (this.x <= 0) {
+            this.x = 0;
+            this.angle = 0;
             this.playAnimation("down");
             }
     
-        if (this.y >= game.displayHeight - this.height) {
-            this.y = game.displayHeight - this.height;
-            this.angle = 90;
+        if (this.x >= game.displayWidth - this.width) {
+            this.x = game.displayWidth - this.width;
+            this.angle = 180;
             this.playAnimation("up");
             }
         
@@ -143,7 +147,7 @@ class NonPlayerWizard extends Sprite {
         spell.y = this.y;
         spell.name = "A spell cast by the Dark Wizard";
         spell.setImage("strangerSpellSheet.png");
-        spell.angle = 180;
+        spell.angle = 270;
         this.playAnimation("left");
         }
     }
@@ -171,7 +175,7 @@ class Fireball extends Sprite {
         if (!game.isActiveSprite(marcus)) {
             game.end("You Suck!\n\nMarcus is defeated by The Mysterious"
             + "\nStranger in The Dark Cloak."
-            +  "\nBetter luck next time, loser!");
+            +  "\nBetter luck next time!");
         }
     }
 }
