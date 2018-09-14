@@ -144,7 +144,6 @@ class NonPlayerWizard extends Sprite {
         this.playAnimation("left");
         }
     }
-    
 }
 
 // Creates/ends fireball
