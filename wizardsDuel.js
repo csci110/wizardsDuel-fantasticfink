@@ -5,7 +5,7 @@ import {Sprite} from "./sgc/sgc.js";
 // Sets the background for the game
 game.setBackground("floor.png");
 
-//Creates PlayerWizard class as child of Sprite class
+// Creates PlayerWizard class as child of Sprite class
 class PlayerWizard extends Sprite {
     constructor () {
         super();
