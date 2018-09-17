@@ -130,7 +130,7 @@ class NonPlayerWizard extends Sprite {
         this.y = this.height;
         this.angle = 0;
         // Speed up the Demon
-        this.speed = 150;
+        this.speed = 500;
         this.defineAnimation("down", 6, 8);
         this.defineAnimation("up", 0, 2);
         this.defineAnimation("left", 9, 11);
