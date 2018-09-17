@@ -9,8 +9,8 @@ game.setBackground("floor.png");
 class PlayerWizard extends Sprite {
     constructor () {
         super();
-        this.name = "Marcus the Wizard";
-        this.setImage("marcusSheet.png");
+        this.name = "Rob the Hero";
+        this.setImage("newrfsprite.png");
         this.width = 48;
         this.height = 48;
         this.x = this.height;
@@ -19,20 +19,20 @@ class PlayerWizard extends Sprite {
         this.defineAnimation("up", 0, 2);
         this.defineAnimation("right", 3, 5);
         this.defineAnimation("left", 9, 11);
-        this.speedWhenWalking = 100;
+        this.speedWhenWalking = 200;
         this.spellCastTime = 0;
     }
     
     // Move Left  
     handleLeftArrowKey() {
-        this.playAnimation("left");
+        //this.playAnimation("left");
         this.speed = this.speedWhenWalking;
         this.angle = 180;
     }
 
     // Move Right
     handleRightArrowKey() {
-        this.playAnimation("right");
+        //this.playAnimation("right");
         this.speed = this.speedWhenWalking;
         this.angle = 0;
     }
@@ -62,7 +62,7 @@ class PlayerWizard extends Sprite {
             spell.name = "A spell cast by Marcus";
             spell.setImage("marcusSpellSheet.png");
             spell.angle = 90;
-            this.playAnimation("up");
+            //this.playAnimation("up");
             }
     }
 }
@@ -102,8 +102,8 @@ class Spell extends Sprite {
 class NonPlayerWizard extends Sprite {
     constructor() {
         super();
-        this.name = "The Mysterious Stranger";
-        this.setImage("strangerSheet.png");
+        this.name = "The Evil Demon";
+        this.setImage("demonsprite.png");
         this.width = 48;
         this.height = 48;
         this.x = game.displayWidth - 2 * this.width;
@@ -122,33 +122,33 @@ class NonPlayerWizard extends Sprite {
         if (this.x <= 0) {
             this.x = 0;
             this.angle = 0;
-            this.playAnimation("down");
+            //this.playAnimation("left");
             }
     
         if (this.x >= game.displayWidth - this.width) {
             this.x = game.displayWidth - this.width;
             this.angle = 180;
-            this.playAnimation("up");
+            //this.playAnimation("right");
             }
         
-        if (this.angle === 90) {
+        /* if (this.angle === 90) {
             this.playAnimation("up");
             }
         
         if (this.angle === 270) {
             this.playAnimation("down");
-            }
+            } */
             
         if (Math.random() < 0.03) {
         let spell = new Spell();
         // This sets the position of the spell object equal to the position
         // of any object created from the PlayerWizard class
         spell.x = this.x - this.width;
-        spell.y = this.y;
+        spell.y = this.y + this.height;
         spell.name = "A spell cast by the Dark Wizard";
         spell.setImage("strangerSpellSheet.png");
         spell.angle = 270;
-        this.playAnimation("left");
+        //this.playAnimation("left");
         }
     }
 }
