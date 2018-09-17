@@ -1,9 +1,29 @@
+/*  
+
+
+
+    Dr. Stauber,
+    
+    I decided to switch the axes for my shooter project.  I switched out the 
+    sprites and everthing appeared to run fine, but I discovered that
+    when my evil sprite fires down along the left wall, the game crashes.  Also,
+    when my player sprite shoots upward, the "magic spell" disappears.  I 
+    assume this must have something to do with the boundary limits, but I 
+    couldn't figure it out.  :(
+    
+    -Rob
+    
+    
+    
+*/
+
+
 // Includes game and Sprite modules from the file ./sgc/sgc.js
 import {game} from "./sgc/sgc.js";
 import {Sprite} from "./sgc/sgc.js";
 
 // Sets the background for the game
-game.setBackground("floor.png");
+game.setBackground("shooterbackground.png");
 
 // Creates PlayerWizard class as child of Sprite class
 class PlayerWizard extends Sprite {
@@ -109,8 +129,8 @@ class NonPlayerWizard extends Sprite {
         this.x = game.displayWidth - 2 * this.width;
         this.y = this.height;
         this.angle = 0;
-        // Speed up the Dark Wizard
-        this.speed = 75;
+        // Speed up the Demon
+        this.speed = 150;
         this.defineAnimation("down", 6, 8);
         this.defineAnimation("up", 0, 2);
         this.defineAnimation("left", 9, 11);
@@ -170,11 +190,11 @@ class Fireball extends Sprite {
     handleAnimationEnd() {
         game.removeSprite(this);
         if (!game.isActiveSprite(stranger)) {
-            game.end("Congratulations!\n\nMarcus has defeated The Mysterious"
-            + "\nStranger in the Dark Cloak!");}
+            game.end("...How the hell did you do that?!\n\nNice one!")
+        }
+        
         if (!game.isActiveSprite(marcus)) {
-            game.end("You Suck!\n\nMarcus is defeated by The Mysterious"
-            + "\nStranger in The Dark Cloak."
+            game.end("You Suck!\n\nYou couldn't even kill one demon??"
             +  "\nBetter luck next time!");
         }
     }
